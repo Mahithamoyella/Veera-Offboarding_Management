@@ -8,7 +8,7 @@ const app = express();
 const port = 3008;
 
 app.use(cors({
-    origin: ['http://18.212.66.59:8014', 'http://127.0.0.1:5501', 'http://127.0.0.1:5503'],
+    origin: ['http://3.93.239.238:8014', 'http://127.0.0.1:5501', 'http://127.0.0.1:5503','http://3.93.239.238:8015'],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
@@ -146,5 +146,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://18.212.66.59:${port}`);
+    console.log(`Server running at http://3.93.239.238:${port}`);
 });
