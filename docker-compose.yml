@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: veera_postgres
+    ports:
+      - "5440:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin834
+      POSTGRES_DB: offboarding_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build:
+      context: ./Backend
+    container_name: veera_backend
+    ports:
+      - "3008:3008"
+    environment:
+      - PGUSER=postgres
+      - PGPASSWORD=admin834
+      - PGDATABASE=offboarding_db
+      - PGHOST=postgres
+      - PGPORT=5432
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./FrontEnd
+    container_name: veera_frontend
+    ports:
+      - "8014:80"
+    depends_on:
+      - postgres
+
+
+  hr:
+    build:
+      context: ./HR
+    container_name: veera_hr
+    ports:
+      - "8015:80"
+    depends_on:
+      - postgres
+
+
+volumes:
+  postgres_data:
+
